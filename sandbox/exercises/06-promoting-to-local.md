@@ -148,7 +148,7 @@ You now have a full local Claude Code setup. Your config is:
 - **Persistent** — auto-memory carries your context across sessions
 - **Expandable** — you can add local MCP servers for Snowflake, dbt, Slack, and more
 
-The local version of this course (**[TBD-LOCAL-REPO-URL]**) covers these local-specific features in more depth — particularly MCP server setup using the `claude mcp add` workflow, terminal basics, and the full settings file. If you want to go deeper, open that course in Claude Code.
+The local version of this course (**[github.com/thomasricketts-arch/analytics-ai-training-course](https://github.com/thomasricketts-arch/analytics-ai-training-course)**) covers these local-specific features in more depth — particularly MCP server setup using the `claude mcp add` workflow, terminal basics, and the full settings file. If you want to go deeper, open that course in Claude Code.
 
 ---
 

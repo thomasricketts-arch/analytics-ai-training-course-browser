@@ -4,7 +4,7 @@
 
 Learn Claude Code by using Claude Code. No slides required — this course teaches itself.
 
-> **Using the Desktop app, VS Code extension, or Terminal instead?** There's a local version of this course at **[TBD-LOCAL-REPO-URL]**. It covers user-level config (`~/.claude/`), auto-memory persistence, and local MCP server setup that the browser version doesn't support.
+> **Using the Desktop app, VS Code extension, or Terminal instead?** There's a local version of this course at **[github.com/thomasricketts-arch/analytics-ai-training-course](https://github.com/thomasricketts-arch/analytics-ai-training-course)**. It covers user-level config (`~/.claude/`), auto-memory persistence, and local MCP server setup that the browser version doesn't support.
 
 ---
 

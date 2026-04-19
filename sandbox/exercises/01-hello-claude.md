@@ -114,6 +114,26 @@ See `resources/eval-checklist.md` for a full checklist you can use anytime.
 
 ---
 
+## Bonus: Explore Modes and Models
+
+Before moving on, try a quick orientation to the two features from Module 2.
+
+**Modes:**
+
+Type `/plan` or press Shift+Tab to enter plan mode. Then ask Claude:
+
+*"What mode are you currently in, and what does that mode let you do?"*
+
+Then ask Claude to plan something simple — like "read all the files in sandbox/sample-data/ and summarize them." Notice that it proposes the plan first, then waits for your approval.
+
+**Models:**
+
+Type `/model opusplan` and ask Claude: *"What model are you using right now, and how will that change when I'm in vs. out of plan mode?"*
+
+These two features — plan mode and `opusplan` — are the highest-value things to build into your workflow early.
+
+---
+
 ## Done? → Move on to Exercise 02: `sandbox/exercises/02-build-your-claudemd.md`
 
 ---
@@ -127,3 +147,4 @@ See `resources/eval-checklist.md` for a full checklist you can use anytime.
 - [ ] Edit a file
 - [ ] Reflect on tools used
 - [ ] Eval moment: verify and critique Claude's output
+- [ ] Try plan mode and `/model opusplan`

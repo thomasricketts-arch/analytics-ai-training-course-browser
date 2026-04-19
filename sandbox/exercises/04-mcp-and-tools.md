@@ -94,33 +94,36 @@ Work through these for any MCP server you're considering:
 
 ---
 
-## Task 5: Install the claude-code-guide MCP Server
+## Task 5: HCP Policy — Check Before You Add
 
-This is a safe server to start with — it only reads from a public GitHub repo to provide Claude Code documentation. It's a practical example of how MCP adds value: Claude can search versioned, authoritative documentation rather than relying on training data.
+Before adding any MCP server to `.mcp.json`, there's one step to do first.
 
-Ask Claude: *"Help me add the claude-code-guide MCP server to `.mcp.json` in this project."*
+Ask Claude: *"What's HCP's policy on MCP server additions, and why does an org need an approval process for these?"*
 
-The configuration looks like this:
+**The policy:** Before adding any MCP server, check the [Approved MCPs page](https://housecall.atlassian.net/wiki/spaces/AOP/pages/3391291429/Approved+MCPs) in Confluence. If a server isn't listed, it hasn't been evaluated — don't add it to a work project. To propose a new server, follow the assessment process linked from that page.
 
-```json
-{
-  "mcpServers": {
-    "claude-code-guide": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "claude-code-ultimate-guide-mcp"]
-    }
-  }
-}
-```
+**Approved servers at HCP and browser availability:**
 
-**Note:** If this is a stdio-type server, it may not be available in the browser version (stdio servers run locally). Ask Claude to check whether a remote HTTP version exists, or treat this task as a configuration exercise — understanding the format — and move on to Task 6.
+| MCP Server | Approved | Browser? |
+|-----------|---------|---------|
+| Atlassian (Jira + Confluence) | ✓ | ✓ remote HTTP |
+| Sentry | ✓ | ✓ remote HTTP |
+| Playwright | ✓ | ✗ stdio only |
+| GitLab | ✓ | ✗ stdio only |
+| GitHub | ✓ | ✓ built-in |
+| DataDog | ✓ | ✓ remote HTTP |
+| Figma | ✓ | ✓ remote HTTP |
+| Amplitude | ✓ | ✓ remote HTTP |
+| Slack | ✓ | ✓ remote HTTP |
+| Jellyfish | ✓ | ✗ stdio only |
 
-Once configured (or conceptually understood), ask:
-- *"Search the claude-code-guide for 'plan mode' and summarize what it says."*
-- *"Get the Claude Code cheatsheet from the guide."*
+**Browser limit:** Only remote HTTP/SSE servers work in browser sessions. Stdio servers (Playwright, GitLab, Jellyfish) require the Desktop app, VS Code extension, or Terminal.
 
-**Concept:** The guide MCP server illustrates the core value proposition — Claude + an authoritative external source is more trustworthy than Claude alone on specialized topics.
+Ask Claude: *"Show me what an approved remote HTTP MCP server config looks like in .mcp.json."*
+
+Read the [MCP Security page](https://housecall.atlassian.net/wiki/spaces/TE/pages/3492741217/MCP+Security) for the three key risks to understand before any addition: tool poisoning, prompt injection, and over-scoped credentials.
+
+**Concept:** A widely-referenced MCP server in Claude Code guides is Florian's `claude-code-ultimate-guide-mcp`. It's useful and safe for personal use, but it's not on HCP's approved list. In a work context, the approval list is the gate — not "it looked useful."
 
 ---
 
@@ -144,19 +147,22 @@ Try it: *"Look at the most recent issue in this repo (if any) and summarize it."
 
 ## Task 7: Your Analyst MCP Wishlist
 
-You won't set all of these up today — some require remote servers or team lead approval. But it's worth knowing what's possible.
+You won't set all of these up today — some are handled by DataEng or require local Claude Code. But it's worth knowing what's approved and what's available in the browser.
 
-Ask Claude: *"What MCP servers would be most useful for an analyst on a Snowflake/dbt/Omni stack? Which of these would work in the browser version (remote HTTP) vs. requiring local setup?"*
+Ask Claude: *"Which of HCP's approved MCP servers would be most useful for a Snowflake/dbt/Omni analyst, and which ones work in the browser version?"*
 
-Useful categories for analysts:
-- **Snowflake MCP** — run queries, inspect schemas, check row counts without leaving Claude Code
-- **Omni MCP** — pull BI data, explore topics, get live metric values
-- **Slack MCP** — post formatted summaries to a channel after analysis
-- **dbt MCP** — read model definitions, check lineage
+**Approved options for analyst work:**
 
-For any of these you're interested in: ask your team lead which are approved for use at HCP, whether a remote HTTP version exists, and how to get access. Don't add database-connected MCP servers without checking first.
+| MCP Server | What it enables | Browser? |
+|-----------|----------------|---------|
+| **Snowflake** | Query data, explore schemas, inspect table structures | ✗ — requires local Claude Code. Request access from DataEng. |
+| **Atlassian** | Read/search Jira issues and Confluence pages in Claude | ✓ remote HTTP |
+| **Slack** | Post formatted summaries to channels after analysis | ✓ remote HTTP |
+| **GitHub** | Read issues, PRs, code diffs | ✓ built-in — no config needed |
 
-**Concept:** The most powerful MCP setups for analysts connect Claude to live data. But live data access requires the same care you'd apply to any other tool with those permissions.
+**A note on Snowflake MCP:** This is not a GitHub install. HCP's Snowflake MCP is built on Snowflake's own Managed MCP Server infrastructure and provisioned by DataEng. It requires local Claude Code to run. To request access: see [How to setup Snowflake MCP](https://housecall.atlassian.net/wiki/spaces/~71202052d5e3d5cb1e403d80fce9ebb6647d11/pages/4083449866/How+to+setup+Snowflake+MCP). Before doing so, read [Querying Data with AI — Omni vs Snowflake](https://housecall.atlassian.net/wiki/spaces/IOT/pages/4053925893/Querying+Data+with+AI+Omni+vs+Snowflake) — the guidance is to default to Omni for most queries.
+
+**Concept:** The most powerful analyst MCP setups connect Claude to live data. But live data access requires the same care you'd apply to any other tool with those permissions.
 
 ---
 
@@ -180,7 +186,7 @@ A reasonable threshold:
 - [ ] Check what MCP tools are active in your current session
 - [ ] Understand how `.mcp.json` works in the browser version
 - [ ] Work through the security questions for any MCP server
-- [ ] Attempt or understand the claude-code-guide MCP server setup
+- [ ] Understand HCP's approval process and which approved servers work in the browser
 - [ ] Explore the built-in GitHub tools
-- [ ] Build your analyst MCP wishlist
+- [ ] Build your analyst MCP wishlist from HCP's approved list
 - [ ] Eval moment: set your personal threshold for MCP server trust

@@ -101,9 +101,67 @@ Once you have a session open in this course folder, try:
 
 ---
 
-## Module 2: Teaching Claude Who You Are
+## Module 2: Working with Claude — Modes and Models
 
-### 2.1 The Config Hierarchy
+### 2.1 Modes
+
+Claude Code has four modes that control how much it acts on its own vs. pausing for your approval:
+
+| Mode | How to enter | Use when |
+|------|-------------|----------|
+| **Default** | Starting state | Most day-to-day work |
+| **Plan mode** | Type `/plan` or press Shift+Tab | Starting any non-trivial task — see the approach before changes happen |
+| **Accept-edits mode** | Press Shift+Tab (cycle) | You trust the workflow and want fewer approval prompts |
+| **Bypass-permissions mode** | Press Shift+Tab (cycle) | Advanced use only — disposable environments. Avoid in work repos. |
+
+**Plan mode is the most useful one to know.** When you type `/plan`, Claude proposes its full approach before making any changes. You can redirect, push back, or approve. Nothing happens until you say go.
+
+> **Browser note:** Shift+Tab cycling works within the browser terminal. If a shortcut doesn't respond as expected, use the slash commands (`/plan`) directly.
+
+### 2.2 Models
+
+Use `/model <name>` to switch the model mid-session:
+
+| Model | Best for |
+|-------|----------|
+| `sonnet` | Default. Fast, capable, handles most analyst work. |
+| `opus` | Deep reasoning, complex analysis, difficult problems. |
+| `opusplan` | **Non-obvious but powerful:** Uses Opus while in plan mode, Sonnet for execution. Gets you high-quality planning without paying Opus cost on every file edit. |
+
+Start with `sonnet`. Switch to `opus` when a task genuinely needs deeper reasoning. Use `opusplan` when you want better planning quality without the full Opus price tag.
+
+### 2.3 `/fast` Mode — Use Sparingly
+
+`/fast` runs Opus with accelerated output — roughly 2.5x faster, but at about 6x the cost.
+
+- **Use when:** Time is critical and the task needs Opus-level reasoning — live debugging during an incident, demo prep with a hard deadline.
+- **Don't use for:** Routine questions, exploratory sessions, or anything that can wait.
+- **After a `/fast` session:** Check `/status` or `/insights` to see what was spent.
+
+### 2.4 Token Usage and Cost Awareness
+
+Some patterns burn through tokens (and budget) much faster than others:
+
+| High-cost pattern | Why |
+|------------------|-----|
+| MCP tool calls with large responses | Snowflake queries, Confluence pages, and Jira issue lists return a lot of text. A `SELECT *` can dump thousands of rows into context. |
+| Pasting large files or logs | The whole file enters context and stays until `/clear` or `/compact`. |
+| Very long sessions without `/compact` | Context grows every turn. Old messages stay in the window until compacted. |
+| Using `opus` or `/fast` for simple questions | Paying Opus pricing for work Sonnet handles fine. |
+
+**Efficiency habits:**
+- Scope MCP queries — add `LIMIT 50`, request specific columns, narrow date ranges.
+- Use `/compact` mid-session when context feels heavy. Use `/clear` to start fully fresh.
+- Default to `sonnet`. Use `opusplan` for complex planning. Reserve `opus` for genuinely hard problems.
+- Save `/fast` for when speed actually matters.
+
+**Try it:** In a session, type `/plan` before your next non-trivial request. Then try `/model opusplan` and ask Claude what model it's using and why.
+
+---
+
+## Module 3: Teaching Claude Who You Are
+
+### 3.1 The Config Hierarchy
 
 In the browser version, Claude reads configuration in layers:
 
@@ -117,7 +175,7 @@ In the browser version, Claude reads configuration in layers:
 
 > If you later switch to the Desktop app, VS Code, or Terminal, you can promote these files to `~/.claude/` for global use across all projects. See Exercise 06.
 
-### 2.2 CLAUDE.md — Your AI's Instruction Manual
+### 3.2 CLAUDE.md — Your AI's Instruction Manual
 
 This is the most important file. It tells Claude:
 - Who you are and what you work on
@@ -130,7 +188,7 @@ In the browser version, your CLAUDE.md lives at `./CLAUDE.md` in the project roo
 
 See `analyst-setup/CLAUDE.md` for a real analyst example (adapted for local use, but the structure is the same).
 
-### 2.3 Rules Files
+### 3.3 Rules Files
 
 Rules live in `.claude/rules/` and cover specific domains:
 
@@ -143,7 +201,7 @@ Rules live in `.claude/rules/` and cover specific domains:
 
 Rules files keep your CLAUDE.md clean and focused. Each rule file adds domain-specific expertise without cluttering the main config.
 
-### 2.4 When to Update Your CLAUDE.md
+### 3.4 When to Update Your CLAUDE.md
 
 | Trigger | Example |
 |---------|---------|
@@ -154,7 +212,7 @@ Rules files keep your CLAUDE.md clean and focused. Each rule file adds domain-sp
 
 In the browser version, updates to `./CLAUDE.md` take effect when Claude next reads the file — tell Claude "read my CLAUDE.md again" after making changes.
 
-### 2.5 Building Your Own Config
+### 3.5 Building Your Own Config
 
 Start with the templates in `sandbox/templates/`:
 1. `starter-claude.md` — Skeleton CLAUDE.md with analyst-focused placeholders
@@ -165,9 +223,9 @@ Start with the templates in `sandbox/templates/`:
 
 ---
 
-## Module 3: Agents, Skills & Your Own Tools
+## Module 4: Agents, Skills & Your Own Tools
 
-### 3.1 What Are Agents?
+### 4.1 What Are Agents?
 
 Agents are specialized sub-instances of Claude with focused expertise. They live in `.claude/agents/` inside this project and are available to any claude.ai/code session that opens this folder.
 
@@ -177,7 +235,7 @@ Agents are specialized sub-instances of Claude with focused expertise. They live
 | `data-validator` | Checks data output against expected patterns |
 | `narrative-writer` | Translates query results into stakeholder summaries |
 
-### 3.2 How Agents Work
+### 4.2 How Agents Work
 
 An agent file has two parts:
 
@@ -196,7 +254,7 @@ The YAML frontmatter configures the agent. The markdown body is its system promp
 
 In the browser version, agents live in `.claude/agents/` inside the project — not in `~/.claude/agents/`. They work identically; the location is just different.
 
-### 3.3 Skills
+### 4.3 Skills
 
 Skills are slash commands — user-triggered shortcuts that expand into full prompts. In the browser version, they live in `.claude/skills/` inside the project.
 
@@ -208,9 +266,9 @@ Skills are slash commands — user-triggered shortcuts that expand into full pro
 
 ---
 
-## Module 4: MCP & External Tools
+## Module 5: MCP & External Tools
 
-### 4.1 What Is MCP?
+### 5.1 What Is MCP?
 
 **Model Context Protocol (MCP)** is how Claude Code connects to external systems — databases, APIs, and more. Think of it as "USB ports for AI": a standard way to plug in tools.
 
@@ -219,7 +277,7 @@ Claude Code ←→ MCP Server ←→ External System
                               (Snowflake, Omni, Slack, etc.)
 ```
 
-### 4.2 How MCP Works in the Browser
+### 5.2 How MCP Works in the Browser
 
 In the browser version, MCP servers are configured in a file called `.mcp.json` in the project root. Claude reads this file at session start and connects to the servers listed.
 
@@ -236,7 +294,7 @@ In the browser version, MCP servers are configured in a file called `.mcp.json` 
 }
 ```
 
-### 4.3 Built-in GitHub Tools
+### 5.3 Built-in GitHub Tools
 
 The browser version includes **built-in tools for GitHub** with no setup required. Claude can:
 - Read issues and pull requests
@@ -246,24 +304,32 @@ The browser version includes **built-in tools for GitHub** with no setup require
 
 No MCP server needed for GitHub work.
 
-### 4.4 Analyst-Relevant MCP Connections
+### 5.4 HCP Policy — Check Before You Add
 
-| MCP Server | Connects to | Notes |
-|-----------|------------|-------|
-| Snowflake | Data warehouse | Requires a remote HTTP-accessible server |
-| Omni | BI platform | Pull reports, explore models |
-| Slack | Slack API | Post results, read channels |
-| claude-code-guide | Claude Code docs | Search documentation |
+Before adding any MCP server to `.mcp.json`, check the [Approved MCPs page](https://housecall.atlassian.net/wiki/spaces/AOP/pages/3391291429/Approved+MCPs) in Confluence. Unapproved servers haven't been evaluated for security or data handling — don't add them to a work project.
 
-> **For data-connected MCP servers:** Check with your team lead before connecting Claude to Snowflake or other production systems. These servers require the same care as any other tool with database access.
+**Key risks:** tool poisoning (injected instructions), prompt injection (data manipulating Claude), and over-scoped credentials. Read the [MCP Security page](https://housecall.atlassian.net/wiki/spaces/TE/pages/3492741217/MCP+Security) for details.
+
+**Browser limit:** Only remote HTTP/SSE servers work in browser sessions. Stdio servers (Playwright, GitLab, Jellyfish) require local Claude Code.
+
+### 5.5 Approved Analyst Connections
+
+| MCP Server | Connects to | Browser? | Notes |
+|-----------|------------|---------|-------|
+| Snowflake | Data warehouse | ✗ local only | HCP-internal via DataEng — not a GitHub install |
+| Atlassian | Jira + Confluence | ✓ remote HTTP | On the approved list |
+| Slack | Slack API | ✓ remote HTTP | Post results, read channels |
+| GitHub | Code repos | ✓ built-in | No config needed |
+
+> **Snowflake MCP** is built on Snowflake's Managed MCP Server and requires local Claude Code. Request access through DataEng. Read [Querying Data with AI — Omni vs Snowflake](https://housecall.atlassian.net/wiki/spaces/IOT/pages/4053925893/Querying+Data+with+AI+Omni+vs+Snowflake) before using — default to Omni for most queries.
 
 **Exercise:** Work through `sandbox/exercises/04-mcp-and-tools.md`
 
 ---
 
-## Module 5: Eval Mindset & The Coaching Loop
+## Module 6: Eval Mindset & The Coaching Loop
 
-### 5.1 Why Eval Matters
+### 6.1 Why Eval Matters
 
 Claude Code is good at: reading and explaining code, drafting SQL, navigating files, generating first drafts.
 
@@ -273,7 +339,7 @@ Claude Code struggles with: knowing what's anomalous in your specific data, dist
 
 See `resources/eval-checklist.md` for a full checklist.
 
-### 5.2 The Coaching Loop
+### 6.2 The Coaching Loop
 
 ```
 1. Do real work with Claude Code
@@ -289,7 +355,7 @@ See `resources/eval-checklist.md` for a full checklist.
 
 ---
 
-## Module 6: Promoting to Local (Optional)
+## Module 7: Promoting to Local (Optional)
 
 If you switch to the Desktop app, VS Code extension, or Terminal later, you can promote the config you built here to a personal, global setup.
 

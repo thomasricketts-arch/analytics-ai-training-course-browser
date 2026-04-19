@@ -13,7 +13,51 @@ Open [claude.ai/code](https://claude.ai/code) and connect this course folder. No
 | End the session | Type `/exit` |
 | Toggle plan mode | Type `/plan` |
 | Compress long context | Type `/compact` |
+| Start fresh context | Type `/clear` |
+| Check token usage | Type `/status` or `/context` |
 | See all slash commands | Type `/help` |
+
+---
+
+## Modes
+
+| Mode | How to enter | Use when |
+|------|-------------|----------|
+| **Default** | Starting state | Most day-to-day work |
+| **Plan mode** | Type `/plan` or press Shift+Tab | Starting any non-trivial task — see the approach before changes happen |
+| **Accept-edits mode** | Press Shift+Tab (cycle) | You trust the workflow, want fewer approval prompts |
+| **Bypass-permissions mode** | Press Shift+Tab (cycle) | Advanced / disposable environments only — avoid in work repos |
+
+> **Browser note:** Shift+Tab cycling works within the browser terminal interface. If a shortcut doesn't respond, use slash commands directly.
+
+---
+
+## Models
+
+Use `/model <name>` to switch mid-session:
+
+| Model | Best for |
+|-------|----------|
+| `sonnet` | Default. Fast, capable, handles most analyst work. |
+| `opus` | Deep reasoning, complex analysis, difficult problems. |
+| `opusplan` | **Non-obvious but powerful:** Opus for plan mode, Sonnet for execution. High-quality planning without full Opus cost. |
+
+`/fast` — Opus with accelerated output (~2.5x speed, ~6x cost). Use only when speed is genuinely critical. Check `/insights` after to review spend.
+
+---
+
+## Token Usage and Cost
+
+High-cost patterns to watch for:
+
+| Pattern | Why it's expensive |
+|---------|-------------------|
+| MCP calls with large responses | Snowflake queries, Confluence pages, Jira lists return a lot of text |
+| Pasting large files or logs | Full file stays in context until `/clear` or `/compact` |
+| Long sessions without `/compact` | Context grows every turn |
+| `opus` or `/fast` for simple questions | Paying Opus pricing for Sonnet-level work |
+
+**Efficiency habits:** Scope MCP queries (`LIMIT 50`, specific columns). Use `/compact` mid-session. Default to `sonnet`. Use `opusplan` for complex planning.
 
 ---
 
@@ -86,6 +130,34 @@ MCP servers are configured in `.mcp.json` in the project root.
 
 ---
 
+## Using /prompt-engineer for Complex Projects
+
+For large projects — building agents, writing skills, designing n8n workflows — use AI to write and refine your prompts rather than drafting them by hand.
+
+```
+/prompt-engineer
+[paste your rough prompt or description]
+```
+
+Add `explain mode` to learn why each change was made:
+```
+/prompt-engineer
+[prompt] — explain mode
+```
+
+### When to use advanced techniques
+
+| Technique | When to use it |
+|-----------|---------------|
+| **Zero-shot** | Task is clear, output format is standard. Always start here. |
+| **One-shot** | The style or structure isn't obvious from instructions alone — add one example to anchor it. |
+| **Few-shot / golden examples** | Output consistency is critical; format is complex; the model keeps drifting. Use 2–5 hand-crafted pairs. |
+| **Prompt chaining** | Task has distinct phases requiring different reasoning. Split into one prompt per phase. |
+
+**Rule of thumb:** Start zero-shot. Escalate to examples only when output quality is insufficient.
+
+---
+
 ## Common Analyst Prompts
 
 **Understand existing SQL**
@@ -126,6 +198,15 @@ Then run /prompt-engineer on it and suggest any improvements.
 
 ---
 
+## Browser-Specific Reminders
+
+- **Auto-memory doesn't persist** between sessions — your `./CLAUDE.md` is your only persistent context. Update it regularly.
+- **After editing your CLAUDE.md**, tell Claude: "Re-read my `./CLAUDE.md`" — it won't pick up changes automatically mid-session.
+- **Config is project-scoped** — it applies here and only here. See Exercise 07 to promote it to a global local setup.
+- **MCP servers:** Only remote HTTP/SSE servers work in browser sessions. Check [Approved MCPs](https://housecall.atlassian.net/wiki/spaces/AOP/pages/3391291429/Approved+MCPs) before adding any.
+
+---
+
 ## Eval Quick Reference
 
 Before trusting Claude's output on anything that matters:
@@ -143,8 +224,18 @@ Full checklist: `resources/eval-checklist.md`
 
 ---
 
-## Browser-Specific Reminders
+## Where to Go for More
 
-- **Auto-memory doesn't persist** between sessions — your `./CLAUDE.md` is your only persistent context. Update it regularly.
-- **After editing your CLAUDE.md**, tell Claude: "Re-read my `./CLAUDE.md`" — it won't pick up changes automatically mid-session.
-- **Config is project-scoped** — it applies here and only here. See Exercise 06 to promote it to a global local setup.
+1. **[Official Claude Code docs](https://docs.claude.com/docs/claude-code)** — canonical, always current
+2. **HCP internal pages:**
+   - [Approved MCPs](https://housecall.atlassian.net/wiki/spaces/AOP/pages/3391291429/Approved+MCPs)
+   - [MCP Security](https://housecall.atlassian.net/wiki/spaces/TE/pages/3492741217/MCP+Security)
+   - [Getting Started with Claude Code](https://housecall.atlassian.net/wiki/spaces/PM/pages/3905683625/Getting+Started+with+Claude+Code)
+   - [Claude Code Architecture Guide](https://housecall.atlassian.net/wiki/spaces/ENG/pages/3823861787/Claude+Code+Architecture+Guide+Building+Blocks+Rules+Skills+and+Commands)
+3. **[Florian's guide](https://cc.bruniaux.com/guide/)** — excellent supplementary reading; not org-approved as an MCP, but useful as a reference
+
+---
+
+## How to Keep This Cheatsheet Useful
+
+Ask Claude to update this file when you learn something new. If Claude answers a question about modes, models, or commands that isn't covered here, say: "Add that to my cheatsheet." The cheatsheet is meant to grow with you.

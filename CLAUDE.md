@@ -20,7 +20,7 @@ This course is designed for claude.ai/code — the browser version of Claude Cod
 
 - **Config lives in the project, not on your machine.** Files go in `.claude/` inside this course folder instead of `~/.claude/` on your machine.
 - **No terminal install needed.** Claude Code is already running in the browser.
-- **MCP servers use `.mcp.json` in the repo** (remote/HTTP servers only — local stdio servers don't work in cloud sessions).
+- **MCP servers use `.mcp.json` in the repo** (remote/HTTP servers only — local stdio servers don't work in cloud sessions). Before adding any server, check HCP's [Approved MCPs page](https://housecall.atlassian.net/wiki/spaces/AOP/pages/3391291429/Approved+MCPs) — the course covers this in Exercise 04.
 - **Auto-memory doesn't persist between sessions.** A strong `./CLAUDE.md` matters more here because Claude starts fresh each time.
 
 When learners ask about `~/.claude/`, clarify: "In the browser version, that lives in `.claude/` inside this project folder instead."
@@ -53,6 +53,10 @@ Read the exercise file to understand what the learner is working on before helpi
 - Connect everything back to real analyst workflows: SQL, Snowflake, Omni, stakeholder reports
 - Remind learners that their config lives in `.claude/` (project-scoped) — not `~/.claude/` (user-scoped)
 - Encourage learners to update their CLAUDE.md as they go
+
+## Cheatsheet Maintenance
+
+When a learner asks a question about Claude Code itself (modes, models, commands, config), answer using `resources/cheatsheet.md` first. If the answer isn't there and you learn it via official docs or HCP pages, offer to update the cheatsheet with the new entry. Ask the learner before editing.
 
 ## What NOT to Do
 

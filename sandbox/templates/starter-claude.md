@@ -88,7 +88,8 @@
 -->
 
 ### Skills (slash commands I have set up)
-- `/sanity-check` — validates a metric value against the HCP instrumentation source of truth
+- `/prompt-engineer` — rewrites and improves a rough prompt
+- `/learn:teach` — step-by-step explanation of any SQL concept or tool
 
 ### Agents
 - [Add agents here as you build them, e.g. "sql-reviewer — reviews Snowflake queries for correctness and style"]

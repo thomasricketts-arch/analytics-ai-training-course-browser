@@ -69,16 +69,35 @@ Catch specific exceptions when you can (not bare `except:`).
 
 ## SQL Style
 
-- Keywords in UPPERCASE: `SELECT`, `FROM`, `WHERE`, `JOIN`, `GROUP BY`
-- Everything else in lowercase: column names, table names, aliases
-- One clause per line for complex queries:
+HCP follows these conventions — use them in all Snowflake queries:
+
+- Keywords in **lowercase**: `select`, `from`, `where`, `join`, `group by`
+- **Leading commas** — comma at the start of each new line in `select`, `group by`, `order by`
+- One expression per line in `select`, `group by`, `order by`
+- Use `where 1=1` so predicates can be toggled with a leading `and`
+- **Qualify all column references** with table aliases — no bare column names
+- Column aliases in ALL CAPS with explicit `as`
+- Prefer views over tables in `datazoo`
+- Use `count()` when counting — not `sum(1)`
+- Never use `right join` — reorder to use `left join` instead
+- NULL-safety: `least()`, `greatest()`, `||`, and `concat()` are **not** null-safe in Snowflake
 
 ```sql
-SELECT name, id, created_at
-FROM customers
-WHERE id > 100
-  AND status = 'active'
-ORDER BY created_at DESC
+select
+    o.organization_id
+    , o.name as ORG_NAME
+    , count() as TOTAL_JOBS
+from analytics.main.dim_organization o
+join analytics.main.fact_job j
+    on o.organization_id = j.organization_id
+where 1=1
+    and o.status = 'active'
+    and j.created_date >= '2025-01-01'
+group by
+    o.organization_id
+    , o.name
+order by
+    TOTAL_JOBS desc
 ```
 
 ## Code Quality Checklist

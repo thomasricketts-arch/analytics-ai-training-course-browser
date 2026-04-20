@@ -225,17 +225,44 @@ Start with the templates in `sandbox/templates/`:
 
 ## Module 4: Agents, Skills & Your Own Tools
 
-### 4.1 What Are Agents?
+### 4.1 Agents vs Skills — Know When to Use Each
 
-Agents are specialized sub-instances of Claude with focused expertise. They live in `.claude/agents/` inside this project and are available to any claude.ai/code session that opens this folder.
+Before building anything, understand the difference:
+
+| | Skills | Agents |
+|--|--------|--------|
+| **Triggered by** | You, manually (`/skill-name`) | Claude, automatically (as a sub-process) |
+| **Best for** | Repeatable workflows you want deliberate control over | Autonomous QA gates, second opinions, specialist delegation |
+| **Mental model** | A tool you pick up | A colleague Claude calls in |
+| **Lives in (browser)** | `.claude/skills/` | `.claude/agents/` |
+
+**Use a skill when:** you have a workflow you want to trigger on demand — formatting output, explaining a concept, polishing a prompt.
+
+**Use an agent when:** you want Claude to delegate to a specialist automatically — reviewing SQL before it runs, validating data output, domain-specific lookups.
+
+### 4.2 What Ships With This Course
+
+One agent ships as a working reference:
 
 | Agent | What it does |
 |-------|-------------|
 | `sql-reviewer` | Reviews queries for correctness, performance, and style |
-| `data-validator` | Checks data output against expected patterns |
-| `narrative-writer` | Translates query results into stakeholder summaries |
 
-### 4.2 How Agents Work
+Two skills ship and are ready to use:
+
+| Skill | What it does |
+|-------|-------------|
+| `/prompt-engineer` | Rewrites and improves a rough prompt |
+| `/learn:teach` | Walks through any SQL concept step by step |
+
+**Example ideas — agents and skills you could build** (not shipped; you'll build your own in Exercise 03):
+
+| Name | Pattern | Why |
+|------|---------|-----|
+| `data-validator` | Agent | Runs independently after a query returns — checks row counts, null rates, and anomalies without user prompting |
+| `narrative-writer` | Skill | User-triggered: you decide when to turn data into a stakeholder summary |
+
+### 4.3 How Agents Work
 
 An agent file has two parts:
 
@@ -252,15 +279,24 @@ You are an expert SQL reviewer specializing in Snowflake...
 
 The YAML frontmatter configures the agent. The markdown body is its system prompt.
 
-In the browser version, agents live in `.claude/agents/` inside the project — not in `~/.claude/agents/`. They work identically; the location is just different.
+In the browser version, agents live in `.claude/agents/` inside the project — not in `~/.claude/agents/`. They work identically; only the location differs.
 
-### 4.3 Skills
+### 4.4 Skills
 
 Skills are slash commands — user-triggered shortcuts that expand into full prompts. In the browser version, they live in `.claude/skills/` inside the project.
 
 **Skills vs Agents:**
-- **Skills** = you trigger them (`/skill-name`)
+- **Skills** = you trigger them (`/prompt-engineer`)
 - **Agents** = Claude calls them automatically based on the task type
+
+### 4.5 Building Your Own Agent
+
+The best agents are:
+- **Focused**: One job, done well
+- **Opinionated**: Clear standards, not vague instructions
+- **Grounded in your actual work**: The metric definitions, table names, and conventions your team actually uses
+
+See `sandbox/templates/starter-agent.md` for a template.
 
 **Exercise:** Work through `sandbox/exercises/03-skills-and-agents.md`
 
@@ -339,7 +375,19 @@ Claude Code struggles with: knowing what's anomalous in your specific data, dist
 
 See `resources/eval-checklist.md` for a full checklist.
 
-### 6.2 The Coaching Loop
+### 6.2 The Eval Habit
+
+Build verification into your workflow — not as a separate step, but as a reflex:
+- SQL output → run it and check the row count
+- Summary → spot-check one number against the source
+- Analysis → ask "what would make this wrong?"
+- Agent output → apply the eval checklist
+
+The goal isn't distrust — it's calibrated trust. Know what Claude is good at and where to verify.
+
+### 6.3 The Coaching Loop
+
+The most powerful use of Claude Code is the feedback loop:
 
 ```
 1. Do real work with Claude Code
@@ -349,7 +397,29 @@ See `resources/eval-checklist.md` for a full checklist.
 5. Repeat
 ```
 
+This is the meta-skill. Everything else is just setup.
+
 **Note for browser users:** Auto-memory doesn't persist between sessions in the browser. This makes a strong `./CLAUDE.md` *more* important, not less — it's the only thing that carries your preferences from session to session. Update it regularly.
+
+To run a self-audit, ask Claude:
+
+```
+"Read my ./CLAUDE.md and my rules files.
+ What's working well? What's missing?
+ What would you add based on our recent sessions?"
+```
+
+Claude can suggest improvements to its own instructions. Run this periodically — especially after finishing a project or learning something new.
+
+### 6.4 What Great Looks Like
+
+After completing this course, you should be able to:
+- Start a Claude Code session and navigate any project
+- Explain what CLAUDE.md, rules files, and agents do
+- Build and customize your own configuration
+- Use Claude Code on real analyst work (SQL review, data validation, stakeholder summaries)
+- Verify Claude Code output using the eval checklist
+- Teach a teammate the basics
 
 **Exercise:** Work through `sandbox/exercises/05-eval-and-meta.md`
 

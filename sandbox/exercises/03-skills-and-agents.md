@@ -2,7 +2,17 @@
 
 You've configured Claude to know who you are. Now you're going to see how to extend what it can do — and how to encode your own workflows so they run consistently without re-explaining them every time.
 
-This exercise covers two closely related concepts: **skills** (slash commands you trigger manually) and **agents** (specialist sub-processes Claude can call automatically). By the end, you'll have built your own agent.
+This exercise covers two closely related concepts: **skills** (slash commands you trigger manually) and **agents** (specialist sub-processes Claude can call automatically). By the end, you'll have built your own agent or skill.
+
+---
+
+## Before You Start: Install the Skills
+
+In the browser version, skills live in `.claude/skills/` inside this project — not on your machine. Copy them in now so the slash commands work during this exercise.
+
+Ask Claude: *"Copy the prompt-engineer and learn-teach skills from `analyst-setup/skills/` into `.claude/skills/` so they're available in this project."*
+
+Once copied, `/prompt-engineer` and `/learn:teach` will be available for the rest of this session.
 
 ---
 
@@ -46,11 +56,7 @@ Try the `--deep` flag if you want more detail:
 /learn:teach --deep CTEs
 ```
 
-**To install these skills for use in this project (browser version):**
-
-Ask Claude: *"Copy the prompt-engineer and learn-teach skills from `analyst-setup/skills/` into `.claude/skills/` so they're available in this project."*
-
-Once in `.claude/skills/`, these skills are available in every claude.ai/code session you open in this project.
+If you completed the setup step at the top of this exercise, both skills are already in `.claude/skills/` and available for this session.
 
 **Concept:** Skills don't have to automate a workflow — they can also encode *how you want to be taught*. The format (definition → minimal example → practical example → mistakes → challenge) is consistent every time.
 
@@ -60,12 +66,12 @@ Once in `.claude/skills/`, these skills are available in every claude.ai/code se
 
 Ask Claude: *"Look at the agents in `analyst-setup/agents/` and describe what each one does. What problem is each one solving? How are their approaches different?"*
 
-If the agents directory is empty, ask Claude: *"Describe what a `sql-reviewer` agent and a `narrative-writer` agent would look like for an analytics team. What would each one's system prompt focus on? What tools would each need?"*
+If the agents directory is empty, ask Claude: *"Describe what a `sql-reviewer` agent and a `data-validator` agent would look like for an analytics team. What would each one's system prompt focus on? What tools would each need?"*
 
 Think about:
 - What does a focused agent look like vs. a general-purpose one?
 - Why would you want an agent that only does SQL review, rather than just asking Claude to review SQL?
-- What makes the narrative-writer's job fundamentally different from the SQL reviewer's?
+- Why is `narrative-writer` a better skill than an agent — and why is `data-validator` a better agent than a skill?
 
 **Concept:** Agents are specialists. A good agent has a narrow scope, a consistent format, and an opinionated point of view. "Review my SQL" is a prompt. A SQL reviewer agent knows exactly what to look for, how to structure its output, and what counts as passing vs. failing.
 
@@ -93,16 +99,23 @@ A skill is something *you* decide to run. An agent is something *Claude* decides
 
 Ask Claude: *"Read `sandbox/templates/starter-agent.md` and walk me through the structure."*
 
-Then pick one of these analyst-appropriate starting points:
-- **SQL reviewer** — reviews Snowflake SQL for correctness, performance, and style
-- **Query explainer** — reads a query and explains it in plain English for a non-technical stakeholder
+Before picking, decide: should this be an **agent** (Claude delegates automatically) or a **skill** (you trigger with `/slash-name`)? Use the framework from Module 4.1 as your guide.
+
+Some ideas to spark your thinking:
+
+**Better as agents** (autonomous, quality-gate logic):
+- **SQL reviewer** — reviews Snowflake SQL for correctness, performance, and style *(this one ships as a reference — read `analyst-setup/agents/sql-reviewer.md`)*
+- **Data validator** — checks that output meets expected row counts, null rates, and value ranges
 - **Metric validator** — checks that a reported metric matches the query that produced it
-- **Report formatter** — takes raw numbers and drafts a structured stakeholder summary
-- **Narrative writer** — translates data into a written narrative with appropriate caveats
 
-Ask Claude: *"Help me build a [your choice] agent using the template. Walk me through customizing the system prompt for my role at HCP."*
+**Better as skills** (user-triggered, deliberate output):
+- **Narrative writer** — translates data into a written summary with appropriate caveats (`/narrative-writer`)
+- **Report formatter** — takes raw numbers and drafts a structured stakeholder report (`/report-format`)
+- **Query explainer** — explains a query in plain English for a non-technical audience (`/explain-query`)
 
-When you have a draft, ask Claude to save it to `.claude/agents/[your-agent-name].md`.
+Ask Claude: *"Help me build a [your choice] agent or skill using the template. Walk me through customizing the system prompt for my role at HCP."*
+
+When you have a draft, ask Claude to save it to `.claude/agents/[name].md` (agent) or `.claude/skills/[name]/SKILL.md` (skill).
 
 **Concept:** A good agent is focused and opinionated. The system prompt should read like a detailed brief to a skilled contractor: here's your scope, here's your output format, here's what you should flag, here's what you should never do. Vague system prompts produce vague output.
 
@@ -155,11 +168,13 @@ The quality of your agent is a mirror of how clearly you can articulate your own
 ---
 
 *Tasks completed:*
+- [ ] Install both skills into `.claude/skills/` (setup step)
 - [ ] Understand what a skill is and how /prompt-engineer works
-- [ ] Try the /learn:teach skill and install it to `.claude/skills/`
-- [ ] Compare agent approaches (sql-reviewer vs. narrative-writer)
+- [ ] Try the /learn:teach skill
+- [ ] Compare agent approaches and understand why some tools are better as agents vs. skills
 - [ ] Understand the difference between skills and agents
-- [ ] Build your own agent using the starter template
-- [ ] Test your agent on real work
+- [ ] Decide whether your own tool should be an agent or a skill, and explain why
+- [ ] Build your own agent or skill using the starter template
+- [ ] Test your tool on real work
 - [ ] Understand when an agent is worth building
 - [ ] Eval moment: what did the output reveal about your instructions?

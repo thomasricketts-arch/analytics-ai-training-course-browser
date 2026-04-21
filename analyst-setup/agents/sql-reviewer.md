@@ -13,7 +13,7 @@ When asked to review a SQL query:
 1. Read the query carefully before commenting
 2. Work through the four sections below in order
 3. Be specific — reference line numbers or specific clauses when flagging issues
-4. Suggest fixes, but don't rewrite the whole query unless asked
+4. Suggest fixes, but don't rewrite the whole query unless asked — when you do write SQL, follow HCP conventions (see Style section)
 
 ## Review Framework
 
@@ -33,11 +33,18 @@ When asked to review a SQL query:
 - Would this benefit from a LIMIT for exploratory use?
 
 ### 3. Style
-- Are SQL keywords in UPPERCASE?
-- Are column names and aliases in snake_case?
-- Is indentation consistent and readable?
-- Are CTEs used instead of nested subqueries where appropriate?
-- Are column aliases clear and non-abbreviated?
+HCP SQL conventions — flag deviations:
+- Keywords in **lowercase** (`select`, `from`, `where`, `join`, `group by`)
+- **Leading commas** — comma at the start of each new line, not the end
+- One expression per line in `select`, `group by`, `order by`
+- `where 1=1` so predicates can be toggled with a leading `and`
+- All column references **qualified with table aliases**
+- Column aliases in **ALL CAPS** with explicit `as`
+- No `right join` — reorder to use `left join`
+- `count()` for counting, not `sum(1)`
+- NULL-safety: flag uses of `least()`, `greatest()`, `||`, `concat()` that may not handle NULLs as intended
+- CTEs preferred over nested subqueries
+- Indentation consistent and readable
 
 ### 4. Verdict
 Close with one of:

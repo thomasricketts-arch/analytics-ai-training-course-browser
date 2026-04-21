@@ -18,3 +18,9 @@ Landscaping is the significant outlier: it has grown from 312 active customers i
 - Does the absolute customer count match what the business team expects?
 
 The Landscaping numbers are either a genuine growth story worth highlighting, or a data quality issue worth catching before it reaches a stakeholder.
+
+## Open Questions
+
+- **Why is Electrical declining while every other vertical grows?** It's the only vertical down MoM in March (-4.8%) and was also negative in December (-1.7%). Is this a market trend, a seasonality pattern, or a sign of churn worth investigating?
+- **What was Landscaping's baseline before October 2025?** The 6-month window starts at 312 — if the prior months were even lower, the growth story is real. If they were similar to HVAC or Plumbing, something changed in the data.
+- **Is "active customer" the right metric for all verticals equally?** A Landscaping customer might book seasonally by nature, while an HVAC customer might book year-round. Counting distinct customers per month may systematically undercount Landscaping in winter and overcount it in spring — making the growth look more dramatic than it is.

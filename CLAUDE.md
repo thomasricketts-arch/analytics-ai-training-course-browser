@@ -87,3 +87,64 @@ If a learner asks whether to update their CLAUDE.md, the best times are:
 - When their role or responsibilities change
 
 In the browser version, updates to `./CLAUDE.md` take effect the next time Claude reads the file — remind learners to ask Claude to re-read it after making changes.
+
+---
+
+# My Analyst Config
+
+## About Me
+
+- **Role**: AI Solutions at Housecall Pro — building AI-powered tooling for internal and external use, with a focus on automating analytics workflows
+- **Experience**: 1 month at HCP. Background in Python, SQL, data science, and business. Growing into JavaScript through n8n work.
+- **Stack**: Snowflake, Omni, Python, n8n, JavaScript (n8n expressions and custom nodes), Claude Code
+- **How I work**: Most of my week is small, focused AI projects — n8n workflows that automate tasks for the analytics team. Work spans ideation through delivery, often solo.
+
+## Workflow Preferences
+
+1. **Always plan before acting.** Before making any changes to files or writing code, explain what you're going to do and wait for my confirmation. Invest time in planning — less wasted execution is worth it.
+2. **Just do the work.** After completing a task, don't over-explain. I'll ask questions if I have them.
+3. **Be direct and concise.** Short responses over long ones. Use tables when they communicate something more efficiently than prose, not by default.
+4. **Explain directly.** If I'm stuck or confused, give me the straight answer — no hints or Socratic guiding.
+5. **Read files before answering questions about them.** Never speculate about content you haven't read.
+6. **Flag uncertainty explicitly.** If you're not sure whether something is correct, say so.
+
+## My Analyst Stack
+
+| Tool | How I use it |
+|------|-------------|
+| **Snowflake** | Primary data warehouse. Analytics queries and ad-hoc analysis. |
+| **Omni** | BI and dashboarding. Stakeholder-facing reports. |
+| **Python** | Scripting, automation, AI integrations. |
+| **n8n** | Workflow automation — primary tool for AI-powered analytics projects. |
+| **JavaScript** | n8n expressions and custom nodes. |
+| **Claude Code** | Planning, code review, drafting, ad-hoc analysis. |
+
+## SQL and Data Conventions
+
+- Follow HCP SQL style conventions — see `.claude/rules/sql-style.md` for the full spec
+- Always include a `LIMIT` for exploratory queries; remove before anything goes into a dashboard or report
+- Never produce a narrative containing numbers not sourced from actual query output
+
+## Things to Never Do
+
+- **Never hardcode API keys, tokens, or secrets.** Use environment variables in Python (`os.environ['KEY_NAME']`) and n8n's built-in credential store. No exceptions.
+- **If you spot something that looks like an API key in a file or prompt, flag it immediately** before doing anything else.
+- **Never log or print credentials** — no debug statements that expose keys in output.
+- **Never include credentials in comments or commit messages**, even as examples.
+- **Never speculate about code or files you haven't read.** Ask to read the file first.
+- **Never produce a narrative with numbers not sourced from actual data.**
+
+## Available Tools and Skills
+
+### Skills
+- None set up yet — see Exercise 03
+
+### Agents
+- None set up yet — see Exercise 03
+
+### MCP Servers
+- None connected yet — see Exercise 04
+
+## Session Learnings
+
+- [Session learnings will appear here as you use Claude Code]

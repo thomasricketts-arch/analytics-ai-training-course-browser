@@ -137,14 +137,19 @@ In the browser version, updates to `./CLAUDE.md` take effect the next time Claud
 ## Available Tools and Skills
 
 ### Skills
-- None set up yet — see Exercise 03
+- `/explain-query` — explains a SQL query in plain English for a non-technical audience
+- `/prompt-engineer` — analyzes, diagnoses, and rewrites prompts for any AI model
+- `/learn:teach [concept]` — teaches any SQL or analytics concept step by step
 
 ### Agents
-- None set up yet — see Exercise 03
+- `n8n-reviewer` — reviews n8n workflow designs for structure, error handling, and credential hygiene before building or shipping
 
 ### MCP Servers
-- None connected yet — see Exercise 04
+- Atlassian (Jira + Confluence) — active in browser sessions
+- Slack — active in browser sessions
+- Omni — query BI instance, fetch data and models
+- GitHub — built-in, no config needed
 
 ## Session Learnings
 
-- [Session learnings will appear here as you use Claude Code]
+- **2026-04-22**: Completed exercises 01–05. Skills installed: explain-query, prompt-engineer, learn:teach. Agent built: n8n-reviewer (minimal scaffold). Key reminder: /skill-name syntax doesn't work in browser — invoke skills by asking Claude to run them by name. Snowflake MCP requires local Claude Code + DataEng provisioning.

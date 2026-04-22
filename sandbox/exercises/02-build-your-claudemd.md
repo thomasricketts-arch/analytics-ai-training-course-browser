@@ -75,18 +75,13 @@ When you're done, ask Claude to write it to `./CLAUDE.md` in the project root (i
 
 ## Task 5: Create Your First Rules File
 
-Ask Claude: *"Read `sandbox/templates/starter-rules.md` and show me the template."*
+Ask Claude: *"Read `sandbox/templates/starter-rules.md` and show me what's in it."*
 
-Then: *"Help me create a SQL style rules file at `.claude/rules/sql-style.md`. Walk me through the sections and fill in anything you already know about my stack (Snowflake, dbt, Omni)."*
+Then: *"Use that template as a starting point and create a SQL style rules file for me at `.claude/rules/sql-style.md`. Treat the HCP conventions in the template as the defaults. Walk me through each section and ask if there's anything I want to change before writing it."*
 
-At minimum, make sure your rules file covers:
-- SQL keyword casing (`SELECT`, `FROM`, `WHERE` in UPPERCASE)
-- CTE preference over nested subqueries
-- One clause per line for complex queries
-- How you want NULL handling called out
-- Any Snowflake-specific functions you use regularly
+Work through it section by section. The defaults are already HCP-standard — you only need to flag anything that doesn't match how you personally work.
 
-**Concept:** Rules files are where you encode domain expertise. You've been writing SQL for a while — you already have preferences. A rules file just makes them explicit so Claude applies them consistently without being asked.
+**Concept:** Rules files encode how you write SQL so Claude applies your conventions consistently without being asked. Starting from the team standard means less to fill in — just note your exceptions.
 
 ---
 
@@ -129,19 +124,6 @@ Ask Claude to create `.claude/settings.json` with this setting if you want it.
 
 ---
 
-## Eval Moment
-
-Your CLAUDE.md reflects who you are today. But your role, stack, and preferences will change.
-
-Ask yourself:
-- What would trigger you to update your CLAUDE.md? (New tool, new team, new project type?)
-- Is there anything in the template you skipped because you weren't sure? Go back and fill it in.
-- Three months from now, what will probably be wrong in what you wrote today?
-
-The best CLAUDE.md setups are treated like living documentation — updated after notable sessions, not left to go stale.
-
----
-
 ## Done? → Move on to Exercise 03: `sandbox/exercises/03-skills-and-agents.md`
 
 ---
@@ -154,4 +136,3 @@ The best CLAUDE.md setups are treated like living documentation — updated afte
 - [ ] Create your first rules file at `.claude/rules/sql-style.md`
 - [ ] Test your config by asking Claude to re-read it
 - [ ] Understand the settings.json file and defaultMode: plan
-- [ ] Eval moment: when should you update your config?

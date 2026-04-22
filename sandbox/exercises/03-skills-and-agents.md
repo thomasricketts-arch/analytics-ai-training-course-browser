@@ -6,13 +6,19 @@ This exercise covers two closely related concepts: **skills** (slash commands yo
 
 ---
 
-## Before You Start: Install the Skills
+## Before You Start: How Skills Work in the Browser
 
-In the browser version, skills live in `.claude/skills/` inside this project — not on your machine. Copy them in now so the slash commands work during this exercise.
+In the browser version of Claude Code, skills work differently than in the terminal or IDE. Slash commands like `/prompt-engineer` are not supported — Claude doesn't recognize them as commands here.
+
+Instead, skills function as **reference documents**. When a skill file is in `.claude/skills/`, Claude can read it and follow its process on request. You invoke a skill by asking Claude to run it:
+
+> *"Run the prompt-engineer skill on this prompt: [your prompt]"*
+
+Claude reads the SKILL.md, follows its defined process, and produces output in the skill's format — manually, but consistently.
 
 Ask Claude: *"Copy the prompt-engineer and learn-teach skills from `analyst-setup/skills/` into `.claude/skills/` so they're available in this project."*
 
-Once copied, `/prompt-engineer` and `/learn:teach` will be available for the rest of this session.
+This is a meaningful limitation worth noting: the repeatability of skills in the browser depends on you invoking them by name and Claude having their files in context. In the terminal or IDE, `/skill-name` triggers them directly with no extra prompt.
 
 ---
 
@@ -20,15 +26,15 @@ Once copied, `/prompt-engineer` and `/learn:teach` will be available for the res
 
 Ask Claude: *"What is a skill in Claude Code? How does it differ from just asking a question?"*
 
-Then ask Claude: *"Read `analyst-setup/skills/prompt-engineer/SKILL.md` and explain what this skill does and how it works."*
+Then ask Claude: *"Explain what the prompt-engineer skill does and how it works."*
 
-Now try it yourself. Write a rough first-draft prompt for something you actually do — a SQL review request, a data summary, a stakeholder update. Don't polish it. Then invoke:
+Now write a rough first-draft prompt for something you actually do — a SQL review request, a data summary, a stakeholder update. Don't polish it. This is the raw material the skill needs.
 
-```
-/prompt-engineer
-```
+Then ask:
 
-Paste your rough prompt when asked. Watch what it diagnoses and rewrites.
+*"Run the prompt-engineer skill on this prompt: [paste yours here]"*
+
+Watch what it diagnoses and rewrites. Compare the output against what you wrote — what did it change, and what did it keep?
 
 After it runs, ask: *"Run this again in explain mode — I want to understand why each change was made."*
 
@@ -40,23 +46,17 @@ After it runs, ask: *"Run this again in explain mode — I want to understand wh
 
 ## Task 2: Try the learn:teach Skill
 
-Ask Claude: *"Read `analyst-setup/skills/learn-teach/SKILL.md` and explain what this skill does and how it works."*
+Ask Claude: *"Explain what the learn-teach skill does and how it works."*
 
-Then try it:
+Then try it — pick any SQL concept you've used but never fully understood: `LAG`, `QUALIFY`, `DATE_TRUNC`, CTEs, `COALESCE`. Ask:
 
-```
-/learn:teach window functions
-```
+*"Run the learn-teach skill on: window functions"*
 
-Or pick any SQL concept you've used but never fully understood — `LAG`, `QUALIFY`, `DATE_TRUNC`, CTEs, `COALESCE`. The skill walks you through it step by step: definition, minimal example, practical example, common mistakes, and a practice challenge.
+The skill walks you through it step by step: definition, minimal example, practical example, common mistakes, and a practice challenge.
 
-Try the `--deep` flag if you want more detail:
+For more depth, ask:
 
-```
-/learn:teach --deep CTEs
-```
-
-If you completed the setup step at the top of this exercise, both skills are already in `.claude/skills/` and available for this session.
+*"Run the learn-teach skill on CTEs with the --deep flag"*
 
 **Concept:** Skills don't have to automate a workflow — they can also encode *how you want to be taught*. The format (definition → minimal example → practical example → mistakes → challenge) is consistent every time.
 
@@ -64,9 +64,9 @@ If you completed the setup step at the top of this exercise, both skills are alr
 
 ## Task 3: Compare Agent Approaches
 
-Ask Claude: *"Look at the agents in `analyst-setup/agents/` and describe what each one does. What problem is each one solving? How are their approaches different?"*
+Ask Claude: *"Read `analyst-setup/agents/sql-reviewer.md` and describe what it does. What problem is it solving? What makes it an agent rather than a skill?"*
 
-If the agents directory is empty, ask Claude: *"Describe what a `sql-reviewer` agent and a `data-validator` agent would look like for an analytics team. What would each one's system prompt focus on? What tools would each need?"*
+Then ask: *"If we wanted to add a second agent for this team — something that complements the sql-reviewer — what would you suggest and why?"*
 
 Think about:
 - What does a focused agent look like vs. a general-purpose one?
@@ -85,7 +85,7 @@ The key distinction:
 
 | | Skills | Agents |
 |--|--------|--------|
-| **Triggered by** | You, manually (`/skill-name`) | Claude, automatically (as a sub-process) |
+| **Triggered by** | You, manually (`/skill-name` in terminal; "run the X skill" in browser) | Claude, automatically (as a sub-process) |
 | **When to use** | Recurring tasks you want to run explicitly | Specialist work Claude routes to internally |
 | **Example** | `/prompt-engineer` a rough prompt | SQL reviewer called when reviewing a query |
 | **Mental model** | A tool you pick up | A colleague Claude calls in |
@@ -97,9 +97,11 @@ A skill is something *you* decide to run. An agent is something *Claude* decides
 
 ## Task 5: Build Your Own Agent
 
-Ask Claude: *"Read `sandbox/templates/starter-agent.md` and walk me through the structure."*
+Before asking Claude anything: write one sentence describing what your agent or skill should do, and one sentence describing what it should never do. Don't overthink it — a rough answer is fine.
 
-Before picking, decide: should this be an **agent** (Claude delegates automatically) or a **skill** (you trigger with `/slash-name`)? Use the framework from Module 4.1 as your guide.
+Then ask Claude: *"Read `sandbox/templates/starter-agent.md` and walk me through the structure."*
+
+Now decide: should this be an **agent** (Claude delegates automatically) or a **skill** (you trigger by name)? Use what you wrote above and the framework from Task 4 as your guide.
 
 Some ideas to spark your thinking:
 
@@ -152,29 +154,17 @@ What's *not* worth encoding as an agent:
 
 ---
 
-## Eval Moment
-
-After running your agent and seeing its output:
-- What corrections did it need? (This reveals gaps in your instructions.)
-- Were there things it got right that you didn't expect? (This reveals assumptions you'd made.)
-- If a colleague ran this agent on the same input, would they get consistent output?
-
-The quality of your agent is a mirror of how clearly you can articulate your own standards. If the output is inconsistent, the instructions are ambiguous.
-
----
-
 ## Done? → Move on to Exercise 04: `sandbox/exercises/04-mcp-and-tools.md`
 
 ---
 
 *Tasks completed:*
 - [ ] Install both skills into `.claude/skills/` (setup step)
-- [ ] Understand what a skill is and how /prompt-engineer works
-- [ ] Try the /learn:teach skill
+- [ ] Understand what a skill is and how prompt-engineer works (browser invocation)
+- [ ] Try the learn-teach skill
 - [ ] Compare agent approaches and understand why some tools are better as agents vs. skills
 - [ ] Understand the difference between skills and agents
 - [ ] Decide whether your own tool should be an agent or a skill, and explain why
 - [ ] Build your own agent or skill using the starter template
 - [ ] Test your tool on real work
 - [ ] Understand when an agent is worth building
-- [ ] Eval moment: what did the output reveal about your instructions?

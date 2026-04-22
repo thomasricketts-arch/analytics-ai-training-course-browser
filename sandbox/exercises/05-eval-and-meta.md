@@ -30,8 +30,6 @@ Do actual analyst work inside this Claude Code session. Options:
 After the output, ask Claude: *"What went well in that? What's something you produced that I should verify before using? What did you assume that I should confirm?"*
 
 Then ask yourself:
-- What would I have caught in that output without Claude?
-- What did Claude catch that I would have missed?
 - What should I add to my `./CLAUDE.md` based on this session?
 
 Write down anything worth adding. The coaching loop closes when you actually update your config — not just when you notice a gap.
@@ -42,17 +40,13 @@ Write down anything worth adding. The coaching loop closes when you actually upd
 
 ## Task 3: Eval in Practice
 
-Ask Claude: *"Read `resources/eval-checklist.md` and walk me through it."*
+Ask Claude: *"Read `resources/eval-checklist.md` and walk me through it. Then apply it to what we did in Exercise 01 — the SQL explanation from Task 2 and the data analysis from Task 3. For each check, tell me what we actually verified, what we didn't, and what would be worth verifying before using this output in real work."*
 
-Now go back to the task from Exercise 01 — or pick a similar task: reading `sandbox/sample-data/sample_query.sql` and summarizing `sandbox/sample-data/sample_output.csv`.
+The checklist isn't a pass/fail test — it's a menu of questions worth asking. Not every check applies to every output, and not every gap is worth closing. Part of building an eval habit is knowing which checks matter for the output in front of you.
 
-This time, apply the eval checklist systematically. Work through every checkbox. Don't skip the ones that seem obvious.
+After Claude walks through it, decide: are there any checks you'd want to run before using this output in a real context? Which ones can you skip?
 
-After going through it, ask: *"How many items on this checklist did I not check when I first did this in Exercise 01?"*
-
-The answer is usually most of them. That's not a failure — it's a calibration. The checklist exists because the instinct to accept plausible-sounding output without verifying it is strong, and it has a cost.
-
-**Concept:** Eval is a habit, not a feature. The checklist is a scaffold for building that habit until it becomes automatic.
+**Concept:** The value of an eval checklist isn't completing it — it's knowing it well enough to apply the right subset quickly. An analyst who skips irrelevant checks and runs the critical ones is more effective than one who mechanically works through all of them.
 
 ---
 

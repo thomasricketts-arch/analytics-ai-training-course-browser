@@ -28,7 +28,7 @@ These teach you how Claude navigates your file system. It uses tools like `Glob`
 
 Ask Claude: *"Read the file `sandbox/sample-data/sample_query.sql` and explain what it does in plain English."*
 
-Then open the file yourself. Is Claude's explanation accurate? What did it get right? What did it miss or simplify?
+Then ask Claude: *"Show me the raw contents of `sandbox/sample-data/sample_query.sql`."* Read through it yourself. Is Claude's explanation accurate? What did it get right? What did it miss or simplify?
 
 This is different from asking Claude in chat mode — Claude Code is reading the *actual file in your project*, not a copy you pasted in.
 
@@ -36,15 +36,18 @@ This is different from asking Claude in chat mode — Claude Code is reading the
 
 ---
 
-## Task 3: Understand the Data
+## Task 3: Analyze Some Data
 
-Ask Claude: *"Read `sandbox/sample-data/sample_output.csv` and tell me: which vertical had the highest growth last month? Which had the lowest? Are there any numbers that look suspicious?"*
+A colleague asks you to take a quick look at some business data they've pulled. Ask Claude:
 
-After Claude answers:
-- Check one of the numbers yourself. Is the math right?
-- Did Claude flag the Landscaping growth numbers? They're unusually high — a good analyst would question them.
+*"Read `sandbox/sample-data/sample_output.csv` and summarize what's going on — what stands out, what looks healthy, and what would you want to dig into further?"*
 
-**Concept:** Claude can summarize data, but you still need to interpret it critically. High MoM growth could be real, seasonal, or a data error. Claude doesn't know which — you do.
+After Claude responds, push back or follow up on something:
+- If Claude flagged something that surprised you, ask it to explain
+- If you disagree with its read, say so and see how it responds
+- Ask a follow-up question about any number that doesn't look right
+
+**Concept:** The real workflow isn't one prompt — it's ask, react, push back, refine. Claude Code is a thinking partner, not a vending machine.
 
 ---
 
@@ -62,11 +65,13 @@ Then ask: *"Find all `.md` files in the `resources/` folder and list what each o
 
 Ask Claude: *"Create a file called `sandbox/my-analysis-notes.md`. In it, write a brief summary of what the sample query does, what the output shows, and one thing you'd want to investigate further."*
 
-After Claude creates it, ask: *"Read `sandbox/my-analysis-notes.md` back to me."*
+After Claude creates it, click **"Created a file"** in Claude's response, then the file name to view it. Or ask: *"Read `sandbox/my-analysis-notes.md` back to me."*
 
-Check:
-- Is the summary accurate?
+Use this checklist — it applies to any document Claude generates:
+- Is the summary accurate, or does it contain anything you'd need to verify?
 - Is "one thing to investigate" a real insight, or a generic filler answer?
+- Would you trust this without reading the source files yourself?
+- What would Claude have gotten wrong if you hadn't checked?
 - Would you edit this before sharing with a stakeholder?
 
 **Concept:** Claude can draft content quickly, but the output is a starting point — not a final product. Your judgment about what's accurate and what's useful is irreplaceable.
@@ -75,9 +80,11 @@ Check:
 
 ## Task 6: Edit a File
 
-Ask Claude: *"Edit `sandbox/my-analysis-notes.md` to add a section at the bottom called 'Open Questions' with three bullet points based on the data."*
+Before asking Claude: jot down one or two open questions *you* have about the data — anything that felt unclear or worth digging into. They don't need to be polished.
 
-Then review what it added. Are the questions genuinely interesting, or are they generic? Edit the file yourself if needed.
+Then ask Claude: *"Edit `sandbox/my-analysis-notes.md` to add a section at the bottom called 'Open Questions' with three bullet points based on the data."*
+
+Compare what it added against what you wrote. Did it land on the same questions? Different ones? Better or worse?
 
 **Concept:** The `Edit` tool modifies existing files without rewriting them. It's precise — Claude changes only what you asked it to change.
 
@@ -98,19 +105,9 @@ The core toolkit:
 
 These five tools are the foundation of almost everything Claude Code does.
 
+If any tool name was unfamiliar, ask Claude to explain it: *"What does the Glob tool actually do, and when would you use it over Grep?"*
+
 ---
-
-## Before Moving On: Eval Moment
-
-You've seen Claude read, summarize, and draft content. Before moving to Exercise 02, ask yourself:
-
-- In Task 3, did Claude correctly identify the most notable pattern in the data?
-- In Task 5, would you trust the summary without reading the source files yourself?
-- What would Claude have gotten wrong if you hadn't checked?
-
-The answer to that last question is worth writing down. It's the beginning of knowing when to trust Claude and when to verify.
-
-See `resources/eval-checklist.md` for a full checklist you can use anytime.
 
 ---
 

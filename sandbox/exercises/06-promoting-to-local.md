@@ -29,10 +29,10 @@ In the local version, these same concepts exist at the user level — applying a
 ~/.claude/settings.json     ← Global settings
 ```
 
-What you gain by going local:
-- **Global config** — your preferences apply to every project automatically
-- **Auto-memory** — Claude remembers things you've told it across sessions
-- **Local MCP servers** — you can run servers as processes on your machine
+What you gain by going local (Desktop app, VS Code extension, or terminal only — none of these apply in the browser):
+- **Global config** — your preferences apply to every project automatically, not just this one
+- **Auto-memory** — Claude remembers things you've told it across sessions (doesn't persist in browser)
+- **Local MCP servers** — you can run servers as processes on your machine (browser supports remote/HTTP only)
 - **Full settings control** — hooks, additional permission modes
 
 ---

@@ -19,28 +19,37 @@
 
 ## SQL Formatting
 
-- **Keywords in UPPERCASE**: `SELECT`, `FROM`, `WHERE`, `JOIN`, `LEFT JOIN`, `INNER JOIN`, `GROUP BY`, `ORDER BY`, `HAVING`, `WITH`, `AS`, `ON`, `AND`, `OR`, `NOT`, `IN`, `BETWEEN`, `CASE`, `WHEN`, `THEN`, `ELSE`, `END`, `DISTINCT`, `LIMIT`
-- **Everything else in lowercase**: column names, table names, aliases, string values, function names (`date_trunc`, `coalesce`, `nullif`)
-- **One clause per line** for queries with more than one condition:
+HCP SQL conventions — these are the team defaults. Adjust only if your work requires something different.
+
+- **Keywords in lowercase**: `select`, `from`, `where`, `join`, `left join`, `group by`, `order by`, `with`, `case`, `when`, `then`, `else`, `end`
+- **Leading commas**: comma at the start of each new line, not the end
+- **One expression per line** in `select`, `group by`, `order by`
+- **`where 1=1`**: use so predicates can be toggled with a leading `and`
+- **All column references qualified with table aliases**
+- **Column aliases in ALL CAPS** with explicit `as`
+- **No `right join`** — reorder to use `left join`
+- **`count()` for counting**, not `sum(1)`
+- **Semicolons**: end every standalone query with a semicolon
 
 ```sql
--- CORRECT
-SELECT
-    customer_id,
-    vertical,
-    COUNT(*) AS order_count
-FROM orders
-WHERE created_at >= DATE_TRUNC('month', CURRENT_DATE)
-  AND status = 'completed'
-GROUP BY 1, 2
-ORDER BY 3 DESC;
-
--- WRONG
-SELECT customer_id, vertical, COUNT(*) AS order_count FROM orders WHERE created_at >= DATE_TRUNC('month', CURRENT_DATE) AND status = 'completed' GROUP BY 1, 2 ORDER BY 3 DESC;
+-- HCP style
+select
+    j.customer_id                       as CUSTOMER_ID
+    , c.vertical                        as VERTICAL
+    , count(distinct j.id)              as JOB_COUNT
+from jobs j
+join customers c
+    on j.customer_id = c.id
+where 1=1
+    and j.status = 'completed'
+    and j.created_at >= date_trunc('month', current_date)
+group by
+    j.customer_id
+    , c.vertical
+order by
+    count(distinct j.id) desc
+;
 ```
-
-- **Trailing commas or leading commas**: [choose one and note it here — e.g., "use trailing commas consistently"]
-- **Semicolons**: end every standalone query with a semicolon
 
 ---
 
@@ -50,27 +59,35 @@ SELECT customer_id, vertical, COUNT(*) AS order_count FROM orders WHERE created_
 
 ```sql
 -- CORRECT: CTE is readable, testable, modifiable
-WITH active_customers AS (
-    SELECT customer_id, vertical, created_at
-    FROM customers
-    WHERE status = 'active'
+with active_customers as (
+    select
+        customer_id
+        , vertical
+        , created_at
+    from customers
+    where 1=1
+        and status = 'active'
 )
-SELECT
-    vertical,
-    COUNT(*) AS active_count
-FROM active_customers
-GROUP BY vertical;
+
+select
+    vertical                    as VERTICAL
+    , count(*)                  as ACTIVE_COUNT
+from active_customers
+group by
+    vertical
+;
 
 -- WRONG: nested subquery is harder to debug
-SELECT
-    vertical,
-    COUNT(*) AS active_count
-FROM (
-    SELECT customer_id, vertical, created_at
-    FROM customers
-    WHERE status = 'active'
+select
+    vertical                    as VERTICAL
+    , count(*)                  as ACTIVE_COUNT
+from (
+    select customer_id, vertical, created_at
+    from customers
+    where status = 'active'
 ) sub
-GROUP BY vertical;
+group by vertical
+;
 ```
 
 Name CTEs descriptively — `active_customers`, `monthly_revenue`, `churned_accounts` — not `cte1`, `temp`, `sub`.

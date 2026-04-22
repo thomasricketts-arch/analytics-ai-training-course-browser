@@ -12,51 +12,53 @@
 --
 -- ============================================================
 
-WITH date_spine AS (
+with date_spine as (
     -- Generate one row per month for the past 6 months
-    SELECT
-        DATE_TRUNC('month', DATEADD('month', -n, CURRENT_DATE)) AS month_start
-    FROM (
-        SELECT ROW_NUMBER() OVER (ORDER BY SEQ4()) - 1 AS n
-        FROM TABLE(GENERATOR(ROWCOUNT => 6))
+    select
+        date_trunc('month', dateadd('month', -n, current_date)) as MONTH_START
+    from (
+        select row_number() over (order by seq4()) - 1 as n
+        from table(generator(rowcount => 6))
     )
-),
-
-active_customers AS (
-    -- A customer is "active" if they completed at least one job in the month
-    SELECT
-        DATE_TRUNC('month', job_completed_at)   AS month_start,
-        c.vertical                              AS vertical,
-        COUNT(DISTINCT j.customer_id)           AS active_customer_count
-    FROM jobs j
-    JOIN customers c
-        ON j.customer_id = c.id
-    WHERE
-        j.status        = 'completed'
-        AND j.job_completed_at >= DATEADD('month', -6, CURRENT_DATE)
-    GROUP BY 1, 2
 )
 
-SELECT
-    ds.month_start,
-    ac.vertical,
-    COALESCE(ac.active_customer_count, 0)   AS active_customers,
-    LAG(ac.active_customer_count) OVER (
-        PARTITION BY ac.vertical
-        ORDER BY ds.month_start
-    )                                       AS prior_month_active_customers,
-    ROUND(
-        (ac.active_customer_count - LAG(ac.active_customer_count) OVER (
-            PARTITION BY ac.vertical ORDER BY ds.month_start
-        )) / NULLIF(LAG(ac.active_customer_count) OVER (
-            PARTITION BY ac.vertical ORDER BY ds.month_start
-        ), 0) * 100,
-        1
-    )                                       AS mom_growth_pct
-FROM date_spine ds
-LEFT JOIN active_customers ac
-    ON ds.month_start = ac.month_start
-ORDER BY
-    ds.month_start DESC,
-    ac.vertical ASC
+, active_customers as (
+    -- A customer is "active" if they completed at least one job in the month
+    select
+        date_trunc('month', j.job_completed_at)   as MONTH_START
+        , c.vertical                              as VERTICAL
+        , count(distinct j.customer_id)           as ACTIVE_CUSTOMER_COUNT
+    from jobs j
+    join customers c
+        on j.customer_id = c.id
+    where 1=1
+        and j.status = 'completed'
+        and j.job_completed_at >= dateadd('month', -6, current_date)
+    group by
+        date_trunc('month', j.job_completed_at)
+        , c.vertical
+)
+
+select
+    ds.month_start                          as MONTH_START
+    , ac.vertical                           as VERTICAL
+    , coalesce(ac.active_customer_count, 0) as ACTIVE_CUSTOMERS
+    , lag(ac.active_customer_count) over (
+        partition by ac.vertical
+        order by ds.month_start
+    )                                       as PRIOR_MONTH_ACTIVE_CUSTOMERS
+    , round(
+        (ac.active_customer_count - lag(ac.active_customer_count) over (
+            partition by ac.vertical order by ds.month_start
+        )) / nullif(lag(ac.active_customer_count) over (
+            partition by ac.vertical order by ds.month_start
+        ), 0) * 100
+        , 1
+    )                                       as MOM_GROWTH_PCT
+from date_spine ds
+left join active_customers ac
+    on ds.month_start = ac.month_start
+order by
+    ds.month_start desc
+    , ac.vertical asc
 ;

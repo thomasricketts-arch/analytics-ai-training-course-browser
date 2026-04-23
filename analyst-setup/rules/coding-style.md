@@ -77,7 +77,7 @@ HCP follows these conventions — use them in all Snowflake queries:
 - Use `where 1=1` so predicates can be toggled with a leading `and`
 - **Qualify all column references** with table aliases — no bare column names
 - Column aliases in ALL CAPS with explicit `as`
-- Prefer views over tables in `your_analytics_views_layer`
+- Prefer views over tables where your team's analytics layer exposes them
 - Use `count()` when counting — not `sum(1)`
 - Never use `right join` — reorder to use `left join` instead
 - NULL-safety: `least()`, `greatest()`, `||`, and `concat()` are **not** null-safe in Snowflake

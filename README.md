@@ -110,13 +110,13 @@ Claude Code has four modes that control how much it acts on its own vs. pausing 
 | Mode | How to enter | Use when |
 |------|-------------|----------|
 | **Default** | Starting state | Most day-to-day work |
-| **Plan mode** | Type `/plan` or press Shift+Tab | Starting any non-trivial task — see the approach before changes happen |
-| **Accept-edits mode** | Press Shift+Tab (cycle) | You trust the workflow and want fewer approval prompts |
-| **Bypass-permissions mode** | Press Shift+Tab (cycle) | Advanced use only — disposable environments. Avoid in work repos. |
+| **Plan mode** | Mode dropdown (browser) · `/plan` or Shift+Tab (CLI/desktop) | Starting any non-trivial task — see the approach before changes happen |
+| **Accept-edits mode** | Mode dropdown (browser) · Shift+Tab (CLI/desktop) | You trust the workflow and want fewer approval prompts |
+| **Bypass-permissions mode** | CLI/desktop only | Advanced use only — disposable environments. Avoid in work repos. |
 
-**Plan mode is the most useful one to know.** When you type `/plan`, Claude proposes its full approach before making any changes. You can redirect, push back, or approve. Nothing happens until you say go.
+**Plan mode is the most useful one to know.** Claude proposes its full approach before making any changes. You can redirect, push back, or approve. Nothing happens until you say go.
 
-> **Browser note:** Shift+Tab cycling works within the browser terminal. If a shortcut doesn't respond as expected, use the slash commands (`/plan`) directly.
+> **Browser note:** In cloud sessions on claude.ai/code, switch modes using the **mode dropdown** next to the prompt box. `/plan` and Shift+Tab are CLI and desktop app features — they aren't available in browser sessions.
 
 ### 2.2 Models
 
@@ -155,7 +155,7 @@ Some patterns burn through tokens (and budget) much faster than others:
 - Default to `sonnet`. Use `opusplan` for complex planning. Reserve `opus` for genuinely hard problems.
 - Save `/fast` for when speed actually matters.
 
-**Try it:** In a session, type `/plan` before your next non-trivial request. Then try `/model opusplan` and ask Claude what model it's using and why.
+**Try it:** Use the mode dropdown to switch to Plan mode before your next non-trivial request. Then try `/model opusplan` and ask Claude what model it's using and why.
 
 ---
 

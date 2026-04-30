@@ -117,7 +117,9 @@ Before moving on, try a quick orientation to the two features from Module 2.
 
 **Modes:**
 
-Type `/plan` or press Shift+Tab to enter plan mode. Then ask Claude:
+In the browser version, use the **mode dropdown** next to the prompt box to switch to Plan mode. (In the CLI or desktop app, you'd type `/plan` or press Shift+Tab — but those don't work in cloud sessions.)
+
+Once you're in plan mode, ask Claude:
 
 *"What mode are you currently in, and what does that mode let you do?"*
 

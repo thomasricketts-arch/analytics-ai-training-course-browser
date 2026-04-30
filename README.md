@@ -110,13 +110,13 @@ Claude Code has four modes that control how much it acts on its own vs. pausing 
 | Mode | How to enter | Use when |
 |------|-------------|----------|
 | **Default** | Starting state | Most day-to-day work |
-| **Plan mode** | Type `/plan` or press Shift+Tab | Starting any non-trivial task — see the approach before changes happen |
-| **Accept-edits mode** | Press Shift+Tab (cycle) | You trust the workflow and want fewer approval prompts |
-| **Bypass-permissions mode** | Press Shift+Tab (cycle) | Advanced use only — disposable environments. Avoid in work repos. |
+| **Plan mode** | **Mode dropdown** next to the prompt box | Starting any non-trivial task — see the approach before changes happen |
+| **Auto accept edits** | **Mode dropdown** next to the prompt box | You trust the workflow and want fewer approval prompts |
+| **Bypass-permissions mode** | Not available in browser sessions | Advanced use only — disposable environments. Avoid in work repos. |
 
-**Plan mode is the most useful one to know.** When you type `/plan`, Claude proposes its full approach before making any changes. You can redirect, push back, or approve. Nothing happens until you say go.
+**Plan mode is the most useful one to know.** Switch to it using the mode dropdown, and Claude will propose its full approach before making any changes. You can redirect, push back, or approve. Nothing happens until you say go.
 
-> **Browser note:** Shift+Tab cycling works within the browser terminal. If a shortcut doesn't respond as expected, use the slash commands (`/plan`) directly.
+> **Browser note:** In browser/cloud sessions (claude.ai/code), use the **mode dropdown** next to the prompt box to switch between Plan mode and Auto accept edits. `/plan` and Shift+Tab are CLI and desktop app features only — they are not available in the browser.
 
 ### 2.2 Models
 
@@ -155,7 +155,7 @@ Some patterns burn through tokens (and budget) much faster than others:
 - Default to `sonnet`. Use `opusplan` for complex planning. Reserve `opus` for genuinely hard problems.
 - Save `/fast` for when speed actually matters.
 
-**Try it:** In a session, type `/plan` before your next non-trivial request. Then try `/model opusplan` and ask Claude what model it's using and why.
+**Try it:** In a session, use the **mode dropdown** next to the prompt box to switch to Plan mode before your next non-trivial request. Then try `/model opusplan` and ask Claude what model it's using and why.
 
 ---
 
@@ -496,7 +496,7 @@ AI Training Course — Browser/
 ## FAQ
 
 **Q: I'm scared I'll break something.**
-A: Claude Code asks permission before dangerous actions. When in doubt, use `/plan` mode — Claude will plan its approach and ask for your approval before doing anything.
+A: Claude Code asks permission before dangerous actions. When in doubt, switch to **Plan mode** using the mode dropdown next to the prompt box — Claude will propose its approach and ask for your approval before doing anything.
 
 **Q: How is this different from the Claude.ai chat interface?**
 A: Claude Code can read, write, and search your actual project files. It's not a chatbot — it has direct access to your work. That's what makes it useful for analysis tasks.

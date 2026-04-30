@@ -117,7 +117,7 @@ Before moving on, try a quick orientation to the two features from Module 2.
 
 **Modes:**
 
-Type `/plan` or press Shift+Tab to enter plan mode. Then ask Claude:
+Use the **mode dropdown** next to the prompt box to switch to Plan mode. Then ask Claude:
 
 *"What mode are you currently in, and what does that mode let you do?"*
 
@@ -144,4 +144,4 @@ These two features — plan mode and `opusplan` — are the highest-value things
 - [ ] Edit a file
 - [ ] Reflect on tools used
 - [ ] Eval moment: verify and critique Claude's output
-- [ ] Try plan mode and `/model opusplan`
+- [ ] Try plan mode (mode dropdown) and `/model opusplan`

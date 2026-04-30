@@ -11,7 +11,7 @@ Open [claude.ai/code](https://claude.ai/code) and connect this course folder. No
 | Action | How to do it |
 |--------|-------------|
 | End the session | Type `/exit` |
-| Toggle plan mode | Type `/plan` |
+| Toggle plan mode | Use the **mode dropdown** next to the prompt box |
 | Compress long context | Type `/compact` |
 | Start fresh context | Type `/clear` |
 | Check token usage | Type `/status` or `/context` |
@@ -24,11 +24,11 @@ Open [claude.ai/code](https://claude.ai/code) and connect this course folder. No
 | Mode | How to enter | Use when |
 |------|-------------|----------|
 | **Default** | Starting state | Most day-to-day work |
-| **Plan mode** | Type `/plan` or press Shift+Tab | Starting any non-trivial task — see the approach before changes happen |
-| **Accept-edits mode** | Press Shift+Tab (cycle) | You trust the workflow, want fewer approval prompts |
-| **Bypass-permissions mode** | Press Shift+Tab (cycle) | Advanced / disposable environments only — avoid in work repos |
+| **Plan mode** | **Mode dropdown** next to the prompt box | Starting any non-trivial task — see the approach before changes happen |
+| **Auto accept edits** | **Mode dropdown** next to the prompt box | You trust the workflow, want fewer approval prompts |
+| **Bypass-permissions mode** | Not available in browser sessions | Advanced / disposable environments only — avoid in work repos |
 
-> **Browser note:** Shift+Tab cycling works within the browser terminal interface. If a shortcut doesn't respond, use slash commands directly.
+> **Browser note:** In browser/cloud sessions (claude.ai/code), use the **mode dropdown** next to the prompt box to switch between Plan mode and Auto accept edits. `/plan` and Shift+Tab are CLI and desktop app features only — they are not available in the browser.
 
 ---
 

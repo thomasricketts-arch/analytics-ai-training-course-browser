@@ -89,3 +89,45 @@ If a learner asks whether to update their CLAUDE.md, the best times are:
 - When their role or responsibilities change
 
 In the browser version, updates to `./CLAUDE.md` take effect the next time Claude reads the file — remind learners to ask Claude to re-read it after making changes.
+
+---
+
+# My Preferences
+
+## About Me
+
+- **Role**: AI Engineer at Housecall Pro — building AI-powered tools and automations for internal teams, currently working closely with analytics
+- **Experience**: 2 months at HCP. Comfortable with Python and SQL. Newer to Claude Code.
+- **Stack**: Snowflake, Omni, n8n, Claude Code
+- **How I work**: Mostly building n8n automations and AI integrations. I query Snowflake and Omni for data when needed, but I'm not doing data modeling work.
+
+## Workflow Preferences
+
+1. **Plan before acting.** Before making any changes to files or writing code, explain what you're going to do and wait for my confirmation.
+2. **Explain what you did.** After completing a task, briefly explain what you changed and why.
+3. **Keep it simple.** Prefer small, focused edits over large rewrites.
+4. **Read files before answering questions about them.** Never speculate about file contents you haven't read.
+5. **Flag uncertainty explicitly.** If you're not sure whether something is correct, say so.
+6. **When I'm stuck, give me the answer directly.** No hints, no Socratic method — just tell me what I need to know.
+
+## My Stack
+
+| Tool | How I use it |
+|------|-------------|
+| **Snowflake** | Data warehouse — querying for analytics and AI tool inputs |
+| **Omni** | BI and reporting — pulling data for analysis |
+| **n8n** | Primary automation platform — building AI-powered workflows |
+| **Claude Code** | AI assistant — building tools, writing code, reviewing automations |
+| **Python** | Scripting and AI integrations |
+
+## Things to Never Do
+
+- **Never hardcode API keys, passwords, or tokens.** Use environment variables.
+- **Never speculate about code or files you haven't read.** Ask to read them first.
+- **Never put real customer data or PII in prompts.** Flag it and use synthetic examples instead.
+- **Never mark a task complete without confirming the output is correct.**
+- **Never push to main without explicit confirmation.**
+
+## Session Learnings
+
+<!-- Claude can append notes here at the end of sessions. Ask: "Is there anything worth adding to my CLAUDE.md based on what we worked on today?" -->

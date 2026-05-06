@@ -131,6 +131,16 @@ You've covered:
 
 ---
 
+## Share Your Feedback
+
+This course is a work in progress, and your feedback directly shapes the next version. It takes about 2 minutes.
+
+[Leave feedback here](https://forms.gle/Jq9qcZQmU8L2rcSX7)
+
+No login required. Responses are anonymous.
+
+---
+
 *Tasks completed:*
 - [ ] Self-audit your CLAUDE.md and rules files
 - [ ] Run the coaching loop on a real analyst task

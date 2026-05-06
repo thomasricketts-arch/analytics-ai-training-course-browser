@@ -493,6 +493,14 @@ AI Training Course — Browser/
 
 ---
 
+## Feedback
+
+Found something confusing? Have a suggestion? Let us know — it takes about 2 minutes and directly shapes the next version of this course.
+
+[Leave feedback here](https://forms.gle/Jq9qcZQmU8L2rcSX7)
+
+---
+
 ## FAQ
 
 **Q: I'm scared I'll break something.**
